@@ -36,22 +36,26 @@ export function Features() {
     {
       number: '01',
       title: 'Book Consultation',
-      description: 'Click on "Start Consultation" and enter your basic details to begin your health journey.'
+      description: 'Click on "Start Consultation" and enter your basic details to begin your health journey.',
+      icon: '📝'
     },
     {
       number: '02',
       title: 'Share Symptoms',
-      description: 'Provide details about your health concerns, symptoms, and medical history through our simple questionnaire.'
+      description: 'Provide details about your health concerns, symptoms, and medical history through our simple questionnaire.',
+      icon: '🩺'
     },
     {
       number: '03',
       title: 'Pay Consultation Fee',
-      description: 'Complete the payment of ₹149 securely through Razorpay to confirm your appointment.'
+      description: 'Complete the payment of ₹149 securely through Razorpay to confirm your appointment.',
+      icon: '💳'
     },
     {
       number: '04',
       title: 'Connect on WhatsApp',
-      description: 'Get instant access to Dr. Vinay Kumar Singh on WhatsApp for personalized treatment guidance.'
+      description: 'Get instant access to Dr. Vinay Kumar Singh on WhatsApp for personalized treatment guidance.',
+      icon: '💬'
     }
   ];
 
@@ -166,13 +170,20 @@ export function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center group"
+                className="group"
               >
-                <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <span className="text-xl font-bold text-primary">{step.number}</span>
+                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 text-center h-full border border-gray-100 group-hover:border-primary/30 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                  {/* Step number badge */}
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-gradient-to-br from-primary to-primary-light rounded-full flex items-center justify-center shadow-lg shadow-primary/30">
+                    <span className="text-white text-xs font-bold">{step.number}</span>
+                  </div>
+                  {/* Icon */}
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/15 to-primary/5 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300">
+                    <span className="text-3xl">{step.icon}</span>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">{step.title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
                 </div>
-                <h4 className="text-base font-semibold text-gray-800 mb-2">{step.title}</h4>
-                <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
           </div>
