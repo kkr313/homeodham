@@ -12,7 +12,7 @@ export function Testimonials() {
   ];
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="pb-24 bg-background relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />

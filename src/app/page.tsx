@@ -18,7 +18,7 @@ export default function Home() {
       <Features />
 
       {/* Pricing Section */}
-      <section className="py-24 bg-background relative overflow-hidden">
+      <section className="pb-24 bg-background relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-7xl">
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
@@ -122,7 +122,7 @@ export default function Home() {
       <Testimonials />
 
       {/* Visit Our Clinic Section - Compact Design */}
-      <section id="contact" className="py-16 bg-background">
+      <section id="contact" className="pb-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <motion.div

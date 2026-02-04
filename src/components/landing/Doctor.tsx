@@ -36,16 +36,16 @@ export function DoctorSection() {
       "Women's Wellness"
     ],
     achievements: [
-      { icon: Award, text: '25+ Years Experience' },
-      { icon: Clock, text: 'Years of Practice' },
-      { icon: Heart, text: 'Happy Patients' },
-      { icon: Shield, text: 'Certified Expert' }
+      { icon: Award, title: '25+', subtitle: 'Years Experience' },
+      { icon: Clock, title: 'Years', subtitle: 'of Practice' },
+      { icon: Heart, title: 'Happy', subtitle: 'Patients' },
+      { icon: Shield, title: 'Certified', subtitle: 'Expert' }
     ],
     bio: 'Dr. Vinay Kumar Singh is a highly experienced Electro Homeopath with over 25 years of clinical practice. He specializes in Electro Homeopathy treatments and is dedicated to providing personalized healthcare solutions through modern telemedicine platforms, making quality healthcare accessible to everyone.'
   };
 
   return (
-    <section id="about" className="py-24 bg-background relative overflow-hidden">
+    <section id="about" className="py-12 bg-background relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -59,7 +59,7 @@ export function DoctorSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <span className="badge-elegant mb-4">
             Meet Our Expert
@@ -78,7 +78,7 @@ export function DoctorSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="card-elegant p-8 mb-12"
+          className="card-elegant p-6 mb-8"
         >
           <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Doctor Image */}
@@ -171,7 +171,7 @@ export function DoctorSection() {
         </motion.div>
 
         {/* Achievements */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {doctor.achievements.map((achievement, index) => (
             <motion.div
               key={index}
@@ -180,11 +180,12 @@ export function DoctorSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
             >
-              <div className="card-elegant p-6 text-center h-full group hover:bg-primary/5 transition-all duration-300">
-                <div className="w-14 h-14 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-gradient-to-br from-primary/10 via-white to-primary/5 rounded-2xl p-5 text-center h-full group hover:shadow-xl hover:-translate-y-1 border border-primary/20 transition-all duration-300">
+                <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary/15 to-primary/5 rounded-full flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
                   <achievement.icon className="w-7 h-7 text-primary" />
                 </div>
-                <p className="text-gray-800 font-semibold">{achievement.text}</p>
+                <h4 className="text-lg font-bold text-gray-800 mb-1">{achievement.title}</h4>
+                <p className="text-gray-500 text-xs font-medium uppercase tracking-wide">{achievement.subtitle}</p>
               </div>
             </motion.div>
           ))}
@@ -196,7 +197,7 @@ export function DoctorSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 text-center"
+          className="mt-8 text-center"
         >
           <div className="card-elegant p-8 max-w-2xl mx-auto bg-gradient-to-r from-primary/10 to-cta/10 border-primary/20">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">

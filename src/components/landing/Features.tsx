@@ -89,7 +89,7 @@ export function Features() {
   ];
 
   return (
-    <section id="features" className="py-20 bg-background">
+    <section id="features" className="pb-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Premium Info Bar */}
         <motion.div
@@ -143,22 +143,22 @@ export function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-20"
+          className="mt-12"
         >
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-cta/10 text-cta text-sm font-semibold mb-6">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-cta/10 text-cta text-sm font-semibold mb-4">
               <span className="w-2 h-2 bg-cta rounded-full mr-2 animate-pulse" />
               Simple Process
             </span>
             <h3 className="text-3xl sm:text-4xl font-bold text-heading">
               How It Works
             </h3>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
               Get started with your consultation in just a few simple steps
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-6">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
@@ -168,10 +168,10 @@ export function Features() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center group"
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <span className="text-2xl font-bold text-primary">{step.number}</span>
+                <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <span className="text-xl font-bold text-primary">{step.number}</span>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">{step.title}</h4>
+                <h4 className="text-base font-semibold text-gray-800 mb-2">{step.title}</h4>
                 <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
@@ -184,22 +184,22 @@ export function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-20"
+          className="mt-12"
         >
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
               <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse" />
               Our Services
             </span>
             <h3 className="text-3xl sm:text-4xl font-bold text-heading">
               Comprehensive Care
             </h3>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
               We offer specialized electro homeopathy treatments for various health conditions
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
@@ -207,12 +207,12 @@ export function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300 group"
+                className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300 group"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl">{service.icon}</span>
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl">{service.icon}</span>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 group-hover:text-primary transition-colors">
+                <h4 className="text-base font-semibold text-gray-800 mb-2 group-hover:text-primary transition-colors">
                   {service.title}
                 </h4>
                 <p className="text-gray-500 text-sm leading-relaxed">
@@ -229,10 +229,10 @@ export function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-20"
+          className="mt-12"
         >
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
               <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse" />
               Testimonials
             </span>
@@ -282,18 +282,18 @@ export function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="mt-20 text-center"
+          className="mt-12 text-center"
         >
-          <div className="bg-gradient-to-r from-primary to-primary-light rounded-3xl p-12 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-primary to-primary-light rounded-3xl p-10 relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50" />
             <div className="relative z-10">
-              <h3 className="text-3xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-white mb-3">
                 Ready to Start Your Healing Journey?
               </h3>
-              <p className="text-white/80 mb-8 max-w-xl mx-auto">
+              <p className="text-white/80 mb-6 max-w-xl mx-auto">
                 Consult with Dr. Vinay Kumar Singh today and experience the benefits of electro homeopathy.
               </p>
-              <Link href="/login" className="inline-flex items-center px-8 py-4 bg-white text-primary font-semibold rounded-full hover:bg-white/90 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+              <Link href="/login" className="inline-flex items-center px-6 py-3 bg-white text-primary font-semibold rounded-full hover:bg-white/90 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Start Consultation
                 <ArrowRight className="w-5 h-5 ml-2" />
