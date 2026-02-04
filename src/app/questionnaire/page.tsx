@@ -10,13 +10,6 @@ import { CONSENT_TEXT } from '@/lib/constants';
 
 const questions = [
   {
-    id: 'name',
-    question: "What's your full name?",
-    placeholder: 'Enter your full name',
-    type: 'text',
-    icon: User
-  },
-  {
     id: 'age',
     question: 'What is your age?',
     placeholder: 'Enter your age in years',
@@ -69,11 +62,18 @@ export default function QuestionnairePage() {
       return;
     }
     
+    // Auto-fill name from login data
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      if (user.name) {
+        setAnswers(prev => ({ ...prev, name: user.name }));
+      }
+    }
+    
     const savedHealthData = localStorage.getItem('consultpro_health_data');
     if (savedHealthData) {
       const data = JSON.parse(savedHealthData);
-      setAnswers(data);
-      // Don't auto-advance to avoid out of bounds
+      setAnswers(prev => ({ ...prev, ...data }));
     }
   }, [router]);
 
@@ -217,15 +217,13 @@ export default function QuestionnairePage() {
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back
                 </Button>
-                {currentQuestion?.type !== 'select' && (
-                  <Button
-                    onClick={handleNext}
-                    disabled={!answers[currentQuestion?.id]}
-                  >
-                    {currentStep === questions.length - 1 ? 'Review' : 'Next'}
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
+                <Button
+                  onClick={handleNext}
+                  disabled={!answers[currentQuestion?.id]}
+                >
+                  {currentStep === questions.length - 1 ? 'Review' : 'Next'}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
               </div>
             </motion.div>
           ) : (
