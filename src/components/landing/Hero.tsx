@@ -129,75 +129,96 @@ export function Hero() {
               className="hidden lg:block relative"
             >
               <div className="relative">
-                {/* Main card */}
+                {/* Main card with chat design */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="card-elegant p-8 relative z-10"
+                  className="bg-white p-6 rounded-2xl shadow-lg relative z-10 max-w-md"
                 >
-                  {/* Header */}
-                  <div className="flex items-center space-x-4 mb-6 pb-6 border-b border-gray-100">
-                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center overflow-hidden">
-                      <img 
-                        src="/img/profile_dp.png"
-                        alt="Dr. Vinay Kumar Singh"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-gray-800 text-xl">Dr. Vinay Kumar Singh</p>
-                      <p className="text-gray-500">Electro Homeopath • 25+ years</p>
-                    </div>
-                    <div className="flex items-center space-x-1 bg-green-100 px-3 py-1.5 rounded-full">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                      <span className="text-xs font-medium text-green-700">Available</span>
-                    </div>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="flex items-center mb-6">
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <span className="ml-2 text-sm text-gray-600">4.9/5 (200+ reviews)</span>
-                  </div>
-
-                  {/* Info Grid */}
-                  <div className="space-y-4">
-                    <div className="flex items-center p-3 bg-gray-50 rounded-xl">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-4">
-                        <MessageCircle className="w-5 h-5 text-primary" />
+                  {/* Chat Header with Rating */}
+                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center overflow-hidden">
+                        <img 
+                          src="/img/profile_dp.png"
+                          alt="Dr. Vinay Kumar Singh"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Consultation</p>
-                        <p className="font-semibold text-gray-800">Via WhatsApp</p>
+                        <p className="font-semibold text-gray-800">Dr. Vinay Kumar Singh</p>
+                        <p className="text-xs text-green-600 flex items-center">
+                          <span className="w-2 h-2 bg-green-500 rounded-full mr-1" />
+                          Online
+                        </p>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center p-3 bg-gray-50 rounded-xl">
-                      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                        <Shield className="w-5 h-5 text-green-600" />
+                    {/* Rating badge attached to header */}
+                    <div className="bg-yellow-50 rounded-lg px-3 py-2">
+                      <div className="flex items-center space-x-1">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star key={star} className="w-3 h-3 text-yellow-400 fill-current" />
+                          ))}
+                        </div>
+                        <span className="font-bold text-gray-800 text-sm">4.9</span>
                       </div>
-                      <div>
-                        <p className="text-sm text-gray-500">Consultation Fee</p>
-                        <p className="font-semibold text-gray-800">₹149 only</p>
-                      </div>
+                      <p className="text-[10px] text-gray-500 text-center">200+ reviews</p>
                     </div>
                   </div>
-                </motion.div>
 
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                  className="absolute -top-4 -right-4 card-elegant p-4 text-gray-800 z-20"
-                >
-                  <div className="flex items-center space-x-2 mb-1">
-                    <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                    <span className="font-bold">4.9</span>
+                  {/* Chat Messages */}
+                  <div className="space-y-3">
+                    {/* Doctor message */}
+                    <div className="flex items-start space-x-2">
+                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <img 
+                          src="/img/profile_dp.png"
+                          alt="Doctor"
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+                      <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 max-w-[180px]">
+                        <p className="text-sm text-gray-700">Hello! How can I help you today?</p>
+                        <p className="text-xs text-gray-400 mt-1">10:30 AM</p>
+                      </div>
+                    </div>
+
+                    {/* Client message */}
+                    <div className="flex items-start justify-end space-x-2">
+                      <div className="bg-green-500 rounded-2xl rounded-tr-none px-4 py-2 max-w-[180px]">
+                        <p className="text-sm text-white">I have chronic headache issues...</p>
+                        <p className="text-xs text-green-100 mt-1">10:31 AM</p>
+                      </div>
+                    </div>
+
+                    {/* Doctor message */}
+                    <div className="flex items-start space-x-2">
+                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <img 
+                          src="/img/profile_dp.png"
+                          alt="Doctor"
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+                      <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 max-w-[180px]">
+                        <p className="text-sm text-gray-700">I understand. Let me help you with that.</p>
+                        <p className="text-xs text-gray-400 mt-1">10:32 AM</p>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500">200+ Happy Patients</p>
+
+                  {/* Chat Input */}
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 bg-gray-100 rounded-full px-4 py-2">
+                        <p className="text-sm text-gray-500">Type a message...</p>
+                      </div>
+                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <MessageCircle className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
 
                 {/* Decorative elements */}
