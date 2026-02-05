@@ -53,6 +53,11 @@ export default function LoginPage() {
     // Save to localStorage
     localStorage.setItem('consultpro_user', JSON.stringify(userData));
 
+    // Dispatch storage event to notify other components
+    window.dispatchEvent(new Event('storage'));
+    // Also dispatch custom event for same-window listeners
+    window.dispatchEvent(new CustomEvent('userLoggedIn', { detail: userData }));
+
     setLoading(false);
     router.push('/questionnaire');
   };

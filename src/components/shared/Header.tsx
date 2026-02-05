@@ -15,20 +15,43 @@ export function Header() {
   const [userData, setUserData] = useState<any>(null);
   const isLandingPage = pathname === '/';
 
+  // Function to check login status from localStorage
+  const checkLoginStatus = () => {
+    const savedUser = localStorage.getItem('consultpro_user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        setIsLoggedIn(true);
+        setUserData(parsed);
+      } catch (e) {
+        setIsLoggedIn(false);
+        setUserData(null);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setUserData(null);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    // Check login status
-    const savedUser = localStorage.getItem('consultpro_user');
-    if (savedUser) {
-      setIsLoggedIn(true);
-      setUserData(JSON.parse(savedUser));
-    }
+    // Check login status on mount
+    checkLoginStatus();
+
+    // Listen for custom login event from same window
+    const handleUserLoggedIn = (e: Event) => {
+      checkLoginStatus();
+    };
+    window.addEventListener('userLoggedIn', handleUserLoggedIn);
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('userLoggedIn', handleUserLoggedIn);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -193,7 +216,39 @@ export function Header() {
                     {link.name}
                   </Link>
                 ))}
-                {!isLoggedIn && (
+                {isLoggedIn ? (
+                  <div className="space-y-2">
+                    <div className="flex items-center px-4 py-3 bg-primary/10 rounded-lg">
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                        <span className="text-white font-semibold">
+                          {userData?.name?.charAt(0) || 'U'}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-gray-800 font-medium">{userData?.name || 'User'}</p>
+                        <p className="text-gray-500 text-sm">{userData?.mobile}</p>
+                      </div>
+                    </div>
+                    <Link
+                      href="/questionnaire"
+                      className="flex items-center px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Calendar className="w-5 h-5 mr-3 text-primary" />
+                      My Consultation
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <LogOut className="w-5 h-5 mr-3" />
+                      Logout
+                    </button>
+                  </div>
+                ) : (
                   <Link
                     href="/login"
                     className="block px-4 py-3 bg-primary text-white text-center font-semibold rounded-lg mt-4"
@@ -201,7 +256,7 @@ export function Header() {
                   >
                     Get Started
                   </Link>
-                )}
+                )}}
               </nav>
             </motion.div>
           )}

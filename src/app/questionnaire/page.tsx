@@ -170,10 +170,7 @@ export default function QuestionnairePage() {
                     {currentQuestion.options?.map((option) => (
                       <button
                         key={option}
-                        onClick={() => {
-                          handleAnswer(option);
-                          handleNext();
-                        }}
+                        onClick={() => handleAnswer(option)}
                         className={`p-4 rounded-xl border-2 transition-all duration-200 ${
                           answers[currentQuestion?.id] === option
                             ? 'border-primary bg-primary/10 text-primary'
@@ -244,6 +241,12 @@ export default function QuestionnairePage() {
                 </h2>
                 
                 <div className="space-y-4 mb-6">
+                  {/* User Info */}
+                  <div className="border-b border-gray-100 pb-4">
+                    <p className="text-sm text-gray-500 mb-1">Name</p>
+                    <p className="text-gray-800 font-medium">{answers.name || 'Not provided'}</p>
+                  </div>
+                  {/* Questionnaire Answers */}
                   {questions.map((q) => (
                     <div key={q.id} className="border-b border-gray-100 pb-4">
                       <p className="text-sm text-gray-500 mb-1">{q.question}</p>

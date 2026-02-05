@@ -25,24 +25,29 @@ export default function SuccessPage() {
     const health = JSON.parse(localStorage.getItem('consultpro_health_data') || '{}');
     const storedPaymentId = localStorage.getItem('consultpro_payment_id') || 'PENDING';
     
-    const message = encodeURIComponent(`Hi ${DOCTOR_INFO.name},
+    const message = encodeURIComponent(`*🏥 Aarogya Homeodham - New Consultation Request*
 
-My name is ${health.name || user.name}, ${health.age || 'N/A'} year old ${health.gender || 'Patient'}.
+━━━━━━━━━━━━━━━━━━━━
+👤 *Patient Name:* ${health.name || user.name}
+📅 *Age/Gender:* ${health.age || 'N/A'} years / ${health.gender || 'Not specified'}
+📱 *Mobile:* ${user.mobile || 'Not provided'}
+━━━━━━━━━━━━━━━━━━━━
 
-📋 SYMPTOMS:
+📋 *Symptoms:*
 ${health.symptoms || 'Not specified'}
 
-⏱️ DURATION: ${health.duration || 'Not specified'}
+⏱️ *Duration:* ${health.duration || 'Not specified'}
 
-✅ PREVIOUS CONSULTATION: ${health.previous || 'No'}
+✅ *Previous Consultation:* ${health.previous || 'No'}
 
-💰 PAYMENT:
-• ₹${DOCTOR_INFO.consultationFee}
-• Ref: ${storedPaymentId}
+━━━━━━━━━━━━━━━━━━━━
+💳 *Payment Status:* Paid (₹${DOCTOR_INFO.consultationFee})
+🧾 *Ref ID:* ${storedPaymentId}
+━━━━━━━━━━━━━━━━━━━━
 
-Mobile: ${user.mobile || 'Not provided'}
+🙏 *Request:* Please guide me for further treatment.
 
-Please guide me. Thank you!`);
+_Thank you!_`);
     
     window.open(
       `https://wa.me/${DOCTOR_WHATSAPP_NUMBER}?text=${message}`,
