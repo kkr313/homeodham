@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Shield, CheckCircle, Lock, CreditCard } from 'lucide-react';
+import { Shield, CheckCircle, Lock, CreditCard, RefreshCw, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CONSULTANCY_CHARGE_DISPLAY } from '@/lib/constants';
 
@@ -23,6 +23,7 @@ export default function PaymentPage() {
     currency: string;
     keyId: string;
   } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('upi');
 
   // Check authentication and service selection
@@ -42,6 +43,7 @@ export default function PaymentPage() {
 
   const createOrder = async () => {
     setLoading(true);
+    setError(null);
     try {
       const response = await fetch('/api/create-order', {
         method: 'POST',
@@ -60,9 +62,12 @@ export default function PaymentPage() {
           currency: data.currency,
           keyId: data.keyId,
         });
+      } else if (data.error) {
+        setError(data.error);
       }
     } catch (error) {
       console.error('Error creating order:', error);
+      setError('Failed to connect to payment server. Please try again.');
     }
     setLoading(false);
   };
@@ -76,9 +81,10 @@ export default function PaymentPage() {
       key: orderData.keyId,
       amount: orderData.amount,
       currency: orderData.currency,
-      name: 'ConsultPro',
+      name: 'Arogya Homeodham',
       description: 'Consultation Payment',
       order_id: orderData.orderId,
+      image: '/img/logo.png',
       handler: (response: any) => {
         // Payment successful
         console.log('Payment successful:', response);
@@ -182,6 +188,18 @@ export default function PaymentPage() {
               </p>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-red-800">{error}</p>
+                  <button onClick={createOrder} className="text-red-600 hover:text-red-800">
+                    <RefreshCw className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Order Summary */}
             <div className="bg-gray-50 rounded-xl p-4 mb-6">
               <div className="flex justify-between items-center mb-2">
@@ -262,11 +280,23 @@ export default function PaymentPage() {
               onClick={handlePayment}
               isLoading={processing}
               className="w-full py-4 text-lg shadow-lg"
-              disabled={!orderData}
+              disabled={!orderData || processing}
             >
               <Lock className="w-4 h-4 mr-2" />
               Pay {service.price || CONSULTANCY_CHARGE_DISPLAY}
             </Button>
+
+            {/* Retry button if order creation failed */}
+            {!orderData && !loading && error && (
+              <Button
+                onClick={createOrder}
+                className="w-full py-3 mt-3"
+                variant="outline"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry Payment Setup
+              </Button>
+            )}
 
             {/* Security badges */}
             <div className="mt-4 flex items-center justify-center space-x-4 text-xs text-gray-500">
