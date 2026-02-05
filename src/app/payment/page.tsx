@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Shield, CheckCircle, Lock, CreditCard, RefreshCw, AlertCircle } from 'lucide-react';
+import { Shield, CheckCircle, Lock, CreditCard, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CONSULTANCY_CHARGE_DISPLAY } from '@/lib/constants';
 
@@ -13,9 +13,14 @@ declare global {
   }
 }
 
+interface Service {
+  title?: string;
+  price?: string;
+}
+
 export default function PaymentPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [orderData, setOrderData] = useState<{
     orderId: string;
@@ -25,11 +30,28 @@ export default function PaymentPage() {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('upi');
+  const [service, setService] = useState<Service>({});
+  const [isClient, setIsClient] = useState(false);
+
+  // Set client flag on mount
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Check authentication and service selection
   useEffect(() => {
+    if (!isClient) return;
+
     const savedUser = localStorage.getItem('consultpro_user');
     const savedService = localStorage.getItem('consultpro_service');
+    
+    if (savedService) {
+      try {
+        setService(JSON.parse(savedService));
+      } catch (e) {
+        console.error('Error parsing service:', e);
+      }
+    }
     
     if (!savedUser) {
       router.push('/login');
@@ -39,7 +61,7 @@ export default function PaymentPage() {
       // Create Razorpay order
       createOrder();
     }
-  }, [router]);
+  }, [router, isClient]);
 
   const createOrder = async () => {
     setLoading(true);
@@ -86,16 +108,17 @@ export default function PaymentPage() {
       order_id: orderData.orderId,
       image: '/img/logo.png',
       handler: (response: any) => {
-        // Payment successful
         console.log('Payment successful:', response);
-        localStorage.setItem('consultpro_payment_id', response.razorpay_payment_id);
-        localStorage.setItem('consultpro_payment_status', 'completed');
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('consultpro_payment_id', response.razorpay_payment_id);
+          localStorage.setItem('consultpro_payment_status', 'completed');
+        }
         router.push('/success');
       },
       prefill: {
-        name: localStorage.getItem('consultpro_user_name') || '',
-        email: localStorage.getItem('consultpro_user_email') || '',
-        contact: localStorage.getItem('consultpro_user_phone') || '',
+        name: typeof window !== 'undefined' ? localStorage.getItem('consultpro_user_name') || '' : '',
+        email: typeof window !== 'undefined' ? localStorage.getItem('consultpro_user_email') || '' : '',
+        contact: typeof window !== 'undefined' ? localStorage.getItem('consultpro_user_phone') || '' : '',
       },
       theme: {
         color: '#3B82F6',
@@ -105,14 +128,12 @@ export default function PaymentPage() {
           setProcessing(false);
         },
       },
-      // Enable all payment methods explicitly
       method: {
         upi: true,
         card: true,
         netbanking: true,
         wallet: true,
       },
-      // Show UPI apps in test mode
       config: {
         display: {
           blocks: {
@@ -143,13 +164,11 @@ export default function PaymentPage() {
       }
     };
 
-    const razorpay = new window.Razorpay(razorpayOptions);
-    razorpay.open();
+    if (typeof window !== 'undefined' && window.Razorpay) {
+      const razorpay = new window.Razorpay(razorpayOptions);
+      razorpay.open();
+    }
   };
-
-  const service = typeof window !== 'undefined' 
-    ? JSON.parse(localStorage.getItem('consultpro_service') || '{}') 
-    : {};
 
   if (loading) {
     return (
