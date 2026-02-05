@@ -7,11 +7,22 @@ import { Shield, CheckCircle, Lock, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CONSULTANCY_CHARGE_DISPLAY } from '@/lib/constants';
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 export default function PaymentPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderData, setOrderData] = useState<{
+    orderId: string;
+    amount: number;
+    currency: string;
+    keyId: string;
+  } | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('upi');
 
   // Check authentication and service selection
@@ -43,7 +54,12 @@ export default function PaymentPage() {
       
       const data = await response.json();
       if (data.orderId) {
-        setOrderId(data.orderId);
+        setOrderData({
+          orderId: data.orderId,
+          amount: data.amount,
+          currency: data.currency,
+          keyId: data.keyId,
+        });
       }
     } catch (error) {
       console.error('Error creating order:', error);
@@ -52,16 +68,77 @@ export default function PaymentPage() {
   };
 
   const handlePayment = async () => {
+    if (!orderData) return;
+    
     setProcessing(true);
-    
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Save payment success
-    localStorage.setItem('consultpro_payment_status', 'completed');
-    
-    router.push('/success');
-    setProcessing(false);
+
+    const razorpayOptions = {
+      key: orderData.keyId,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: 'ConsultPro',
+      description: 'Consultation Payment',
+      order_id: orderData.orderId,
+      handler: (response: any) => {
+        // Payment successful
+        console.log('Payment successful:', response);
+        localStorage.setItem('consultpro_payment_id', response.razorpay_payment_id);
+        localStorage.setItem('consultpro_payment_status', 'completed');
+        router.push('/success');
+      },
+      prefill: {
+        name: localStorage.getItem('consultpro_user_name') || '',
+        email: localStorage.getItem('consultpro_user_email') || '',
+        contact: localStorage.getItem('consultpro_user_phone') || '',
+      },
+      theme: {
+        color: '#3B82F6',
+      },
+      modal: {
+        ondismiss: () => {
+          setProcessing(false);
+        },
+      },
+      // Enable all payment methods explicitly
+      method: {
+        upi: true,
+        card: true,
+        netbanking: true,
+        wallet: true,
+      },
+      // Show UPI apps in test mode
+      config: {
+        display: {
+          blocks: {
+            utib: {
+              name: 'Bank Transfer',
+              instruments: [
+                { method: 'netbanking', banks: ['UTIB'] }
+              ]
+            },
+            upi: {
+              name: 'UPI',
+              instruments: [
+                { method: 'upi' }
+              ]
+            },
+            card: {
+              name: 'Card',
+              instruments: [
+                { method: 'card' }
+              ]
+            }
+          },
+          sequence: ['block.upi', 'block.card', 'block.utib'],
+          preferences: {
+            show_default_blocks: true
+          }
+        }
+      }
+    };
+
+    const razorpay = new window.Razorpay(razorpayOptions);
+    razorpay.open();
   };
 
   const service = typeof window !== 'undefined' 
@@ -98,6 +175,13 @@ export default function PaymentPage() {
 
           {/* Payment Content */}
           <div className="p-6">
+            {/* Test Mode Banner */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+              <p className="text-sm text-yellow-800">
+                <strong>Test Mode:</strong> Use UPI ID <code className="bg-yellow-100 px-1 rounded">success@razorpay</code> for testing UPI payments
+              </p>
+            </div>
+
             {/* Order Summary */}
             <div className="bg-gray-50 rounded-xl p-4 mb-6">
               <div className="flex justify-between items-center mb-2">
@@ -173,38 +257,12 @@ export default function PaymentPage() {
               </label>
             </div>
 
-            {/* Card Details (if card selected) */}
-            {paymentMethod === 'card' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="space-y-3 mb-6"
-              >
-                <input
-                  type="text"
-                  placeholder="Card Number"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary"
-                />
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="MM/YY"
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary"
-                  />
-                  <input
-                    type="text"
-                    placeholder="CVV"
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary"
-                  />
-                </div>
-              </motion.div>
-            )}
-
             {/* Pay Button */}
             <Button
               onClick={handlePayment}
               isLoading={processing}
               className="w-full py-4 text-lg shadow-lg"
+              disabled={!orderData}
             >
               <Lock className="w-4 h-4 mr-2" />
               Pay {service.price || CONSULTANCY_CHARGE_DISPLAY}
