@@ -234,59 +234,6 @@ export function Features() {
           </div>
         </motion.div>
 
-        {/* Testimonials */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12"
-        >
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
-              <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse" />
-              Testimonials
-            </span>
-            <h3 className="text-3xl sm:text-4xl font-bold text-heading">
-              What Our Patients Say
-            </h3>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-              Real experiences from patients who consulted with Dr. Vinay Kumar Singh
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-xl">{testimonial.avatar}</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">{testimonial.name}</h5>
-                    <p className="text-sm text-gray-500">{testimonial.location}</p>
-                  </div>
-                </div>
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 leading-relaxed italic">
-                  "{testimonial.text}"
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
