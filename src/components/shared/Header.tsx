@@ -256,7 +256,7 @@ export function Header() {
                   >
                     Get Started
                   </Link>
-                )}}
+                )}
               </nav>
             </motion.div>
           )}
