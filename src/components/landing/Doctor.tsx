@@ -122,23 +122,47 @@ export function DoctorSection() {
               <p className="text-gray-600 leading-relaxed mb-4">{doctor.bio}</p>
 
               {/* Clinic Information */}
-              <div className="bg-gray-50 rounded-xl p-4 mb-4 border border-gray-100">
-                <div className="flex items-start mb-3">
-                  <MapPin className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
-                  <div>
-                    <p className="text-gray-800 font-medium">{doctor.clinic.name}</p>
-                    <p className="text-gray-500 text-sm">{doctor.clinic.address}</p>
+              <div className="bg-white rounded-xl p-4 mb-4 border border-gray-200">
+                {/* Mobile: Stacked | Web: 2x2 Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-3 lg:gap-x-4">
+                  {/* Address */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                      <MapPin className="w-4 h-4 text-emerald-600" />
+                    </div>
+                    <div>
+                      <p className="text-gray-800 font-semibold text-sm">{doctor.clinic.name}</p>
+                      <p className="text-gray-500 text-xs">{doctor.clinic.address}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Phone */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                      <Phone className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-blue-600 font-medium text-sm">{doctor.contact}</span>
+                  </div>
+                  
+                  {/* Hours */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                      <Clock className="w-4 h-4 text-amber-600" />
+                    </div>
+                    <div>
+                      <p className="text-gray-800 font-medium text-sm">{doctor.availability.days}</p>
+                      <p className="text-gray-500 text-xs">{doctor.availability.morning} & {doctor.availability.evening}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Sunday Closed */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                      <Calendar className="w-4 h-4 text-red-500" />
+                    </div>
+                    <span className="text-red-500 font-medium text-sm">{doctor.availability.closed}</span>
                   </div>
                 </div>
-                <div className="flex items-center text-sm text-gray-500 mb-2">
-                  <Phone className="w-4 h-4 mr-2" />
-                  <span>{doctor.contact}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-500">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>{doctor.availability.days}: {doctor.availability.morning} & {doctor.availability.evening}</span>
-                </div>
-                <p className="text-red-500 text-sm mt-1">• {doctor.availability.closed}</p>
               </div>
 
               {/* Consultation Fee */}

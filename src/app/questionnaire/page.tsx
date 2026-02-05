@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, CheckCircle, MessageCircle, User, Heart, Calendar, FileText, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, CheckCircle, MessageCircle, User, Heart, Calendar, FileText, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CONSENT_TEXT } from '@/lib/constants';
 
@@ -15,6 +15,20 @@ const questions = [
     placeholder: 'Enter your age in years',
     type: 'number',
     icon: Calendar
+  },
+  {
+    id: 'height',
+    question: 'What is your height?',
+    placeholder: 'Enter your height',
+    type: 'height',
+    icon: ArrowUp
+  },
+  {
+    id: 'weight',
+    question: 'What is your weight?',
+    placeholder: 'Enter your weight',
+    type: 'weight',
+    icon: ArrowDown
   },
   {
     id: 'gender',
@@ -34,8 +48,8 @@ const questions = [
   {
     id: 'duration',
     question: 'How long have you been experiencing these symptoms?',
-    placeholder: 'e.g., 2 days, 1 week, etc.',
-    type: 'text',
+    placeholder: 'Enter duration',
+    type: 'duration',
     icon: Clock
   },
   {
@@ -188,6 +202,147 @@ export default function QuestionnairePage() {
                     placeholder={currentQuestion?.placeholder}
                     className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 min-h-[150px] resize-none"
                   />
+                ) : currentQuestion?.type === 'height' ? (
+                  <div className="space-y-4">
+                    <div className="flex space-x-4">
+                      <div className="flex-1">
+                        <input
+                          type="number"
+                          value={answers[currentQuestion?.id]?.split(' ')[0] || ''}
+                          onChange={(e) => {
+                            const unit = answers[currentQuestion?.id]?.split(' ')[1] || 'ft';
+                            handleAnswer(`${e.target.value} ${unit}`);
+                          }}
+                          placeholder="Enter height"
+                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                        />
+                      </div>
+                      <div className="flex rounded-xl border-2 border-gray-200 overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} ft`);
+                          }}
+                          className={`px-4 py-4 text-sm font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').endsWith('ft')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          ft
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} cm`);
+                          }}
+                          className={`px-4 py-4 text-sm font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').endsWith('cm')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          cm
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : currentQuestion?.type === 'weight' ? (
+                  <div className="space-y-4">
+                    <div className="flex space-x-4">
+                      <div className="flex-1">
+                        <input
+                          type="number"
+                          value={answers[currentQuestion?.id]?.split(' ')[0] || ''}
+                          onChange={(e) => {
+                            handleAnswer(`${e.target.value} kg`);
+                          }}
+                          placeholder="Enter weight"
+                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                        />
+                      </div>
+                      <div className="flex items-center justify-center px-4 bg-gray-100 rounded-xl border-2 border-gray-200">
+                        <span className="text-gray-700 font-medium">kg</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : currentQuestion?.type === 'duration' ? (
+                  <div className="space-y-4">
+                    <div className="flex space-x-4">
+                      <div className="flex-1">
+                        <input
+                          type="number"
+                          value={answers[currentQuestion?.id]?.split(' ')[0] || ''}
+                          onChange={(e) => {
+                            const unit = answers[currentQuestion?.id]?.split(' ')[1] || 'days';
+                            handleAnswer(`${e.target.value} ${unit}`);
+                          }}
+                          placeholder="Enter duration"
+                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                        />
+                      </div>
+                      <div className="flex rounded-xl border-2 border-gray-200 overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} days`);
+                          }}
+                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').includes('days')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Days
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} weeks`);
+                          }}
+                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').includes('weeks')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Weeks
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} months`);
+                          }}
+                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').includes('months')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Months
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
+                            handleAnswer(`${value} years`);
+                          }}
+                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                            (answers[currentQuestion?.id] || '').includes('years')
+                              ? 'bg-primary text-white'
+                              : 'bg-white text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Years
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <input
                     type={currentQuestion?.type || 'text'}
