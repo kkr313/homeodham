@@ -23,6 +23,9 @@ export function validatePhoneNumber(phone: string): boolean {
 export function generateWhatsAppMessage(userData: {
   name: string;
   age: string;
+  height: string;
+  weight: string;
+  gender: string;
   symptoms: string;
   duration: string;
   allergies: string;
@@ -32,6 +35,9 @@ export function generateWhatsAppMessage(userData: {
 *My Details:*
 - Name: ${userData.name}
 - Age: ${userData.age}
+- Height: ${userData.height}
+- Weight: ${userData.weight}
+- Gender: ${userData.gender}
 - Symptoms: ${userData.symptoms}
 - Duration: ${userData.duration}
 - Allergies: ${userData.allergies || 'None'}

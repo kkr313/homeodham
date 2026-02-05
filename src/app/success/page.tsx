@@ -29,7 +29,10 @@ export default function SuccessPage() {
 
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Patient Name:* ${health.name || user.name}
-📅 *Age/Gender:* ${health.age || 'N/A'} years / ${health.gender || 'Not specified'}
+📅 *Age:* ${health.age || 'N/A'} years
+📏 *Height:* ${health.height || 'Not specified'}
+⚖️ *Weight:* ${health.weight || 'Not specified'}
+👫 *Gender:* ${health.gender || 'Not specified'}
 📱 *Mobile:* ${user.mobile || 'Not provided'}
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -166,16 +169,28 @@ _Thank you!_`);
                   <span className="text-gray-700 ml-2">{healthData.name || '-'}</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Age/Gender:</span>
-                  <span className="text-gray-700 ml-2">{healthData.age || '-'} / {healthData.gender || '-'}</span>
+                  <span className="text-gray-400">Age:</span>
+                  <span className="text-gray-700 ml-2">{healthData.age || '-'} years</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Symptoms:</span>
-                  <span className="text-gray-700 ml-2">{healthData.symptoms?.slice(0, 50) || '-'}...</span>
+                  <span className="text-gray-400">Height:</span>
+                  <span className="text-gray-700 ml-2">{healthData.height || '-'}</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Weight:</span>
+                  <span className="text-gray-700 ml-2">{healthData.weight || '-'}</span>
+                </div>
+                <div>
+                  <span className="text-gray-400">Gender:</span>
+                  <span className="text-gray-700 ml-2">{healthData.gender || '-'}</span>
                 </div>
                 <div>
                   <span className="text-gray-400">Duration:</span>
                   <span className="text-gray-700 ml-2">{healthData.duration || '-'}</span>
+                </div>
+                <div className="sm:col-span-2">
+                  <span className="text-gray-400">Symptoms:</span>
+                  <span className="text-gray-700 ml-2">{healthData.symptoms?.slice(0, 50) || '-'}...</span>
                 </div>
               </div>
             </div>
