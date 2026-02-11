@@ -205,21 +205,32 @@ export default function PaymentPage() {
     if (redirected) return;
     setRedirected(true);
     
-    const userName = localStorage.getItem('consultpro_user_name') || '[Your Name]';
+    // Get user name from stored user data
+    const savedUser = localStorage.getItem('consultpro_user');
+    let userName = '[Your Name]';
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        userName = userData.name || '[Your Name]';
+      } catch (e) {
+        console.error('Error parsing user data:', e);
+      }
+    }
+    
     const healthData = localStorage.getItem('consultpro_health_data');
     
-    let healthDetails = [];
+    let healthDetails = ['Patient Details:'];
+    healthDetails.push(`  Name: ${userName}`);
     if (healthData) {
       try {
         const data = JSON.parse(healthData);
-        healthDetails.push(`Name: ${userName}`);
-        if (data.age) healthDetails.push(`Age: ${data.age}`);
-        if (data.height) healthDetails.push(`Height: ${data.height}`);
-        if (data.weight) healthDetails.push(`Weight: ${data.weight}`);
-        if (data.gender) healthDetails.push(`Gender: ${data.gender}`);
-        if (data.symptoms) healthDetails.push(`Symptoms: ${data.symptoms}`);
-        if (data.duration) healthDetails.push(`Duration: ${data.duration}`);
-        if (data.previous) healthDetails.push(`Previous Consultation: ${data.previous}`);
+        if (data.age) healthDetails.push(`  Age: ${data.age}`);
+        if (data.height) healthDetails.push(`  Height: ${data.height}`);
+        if (data.weight) healthDetails.push(`  Weight: ${data.weight}`);
+        if (data.gender) healthDetails.push(`  Gender: ${data.gender}`);
+        if (data.symptoms) healthDetails.push(`  Symptoms: ${data.symptoms}`);
+        if (data.duration) healthDetails.push(`  Duration: ${data.duration}`);
+        if (data.previous) healthDetails.push(`  Previous Consultation: ${data.previous}`);
       } catch (e) {
         console.error('Error parsing health data:', e);
       }
@@ -227,7 +238,6 @@ export default function PaymentPage() {
     
     const message = `Hello Dr. Vinay Kumar Singh,
 
-Patient Details:
 ${healthDetails.join('\n') || 'N/A'}
 
 I have completed the payment for my consultation.
