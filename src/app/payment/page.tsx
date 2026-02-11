@@ -206,21 +206,35 @@ export default function PaymentPage() {
     setRedirected(true);
     
     const userName = localStorage.getItem('consultpro_user_name') || '[Your Name]';
-    const userPhone = localStorage.getItem('consultpro_user_phone') || '[Your Phone]';
+    const healthData = localStorage.getItem('consultpro_health_data');
+    
+    let healthDetails = [];
+    if (healthData) {
+      try {
+        const data = JSON.parse(healthData);
+        healthDetails.push(`Name: ${userName}`);
+        if (data.age) healthDetails.push(`Age: ${data.age}`);
+        if (data.height) healthDetails.push(`Height: ${data.height}`);
+        if (data.weight) healthDetails.push(`Weight: ${data.weight}`);
+        if (data.gender) healthDetails.push(`Gender: ${data.gender}`);
+        if (data.symptoms) healthDetails.push(`Symptoms: ${data.symptoms}`);
+        if (data.duration) healthDetails.push(`Duration: ${data.duration}`);
+        if (data.previous) healthDetails.push(`Previous Consultation: ${data.previous}`);
+      } catch (e) {
+        console.error('Error parsing health data:', e);
+      }
+    }
     
     const message = `Hello Dr. Vinay Kumar Singh,
 
+Patient Details:
+${healthDetails.join('\n') || 'N/A'}
+
 I have completed the payment for my consultation.
 
-Please find my payment details below:
+Please find attached my payment screenshot.
 
-Name: ${userName}
-Phone: ${userPhone}
-Amount Paid: ${CONSULTANCY_CHARGE_DISPLAY}
-Transaction Reference/UTR: [Please enter]
-Payment Method: [UPI/Bank/Cash]
-
-I have attached my payment screenshot.
+Payment Amount: ${CONSULTANCY_CHARGE_DISPLAY}
 
 Please confirm my consultation booking.
 
