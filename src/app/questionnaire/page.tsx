@@ -167,25 +167,25 @@ export default function QuestionnairePage() {
               </div>
 
               {/* Question */}
-              <div className="mb-6">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                  <Icon className="w-7 h-7 text-primary" />
+              <div className="mb-4 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
+                  <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+                <h1 className="text-xl sm:text-3xl font-bold text-gray-800 mb-2">
                   {currentQuestion?.question || 'Loading...'}
                 </h1>
-                <p className="text-gray-500 text-sm">Your answer helps us understand your health better</p>
+                <p className="text-gray-500 text-xs sm:text-sm">Your answer helps us understand your health better</p>
               </div>
 
               {/* Input */}
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 {currentQuestion?.type === 'select' ? (
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-4">
                     {currentQuestion.options?.map((option) => (
                       <button
                         key={option}
                         onClick={() => handleAnswer(option)}
-                        className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                        className={`p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 text-sm ${
                           answers[currentQuestion?.id] === option
                             ? 'border-primary bg-primary/10 text-primary'
                             : 'border-gray-200 hover:border-primary/50 text-gray-700'
@@ -200,11 +200,11 @@ export default function QuestionnairePage() {
                     value={answers[currentQuestion?.id] || ''}
                     onChange={(e) => handleAnswer(e.target.value)}
                     placeholder={currentQuestion?.placeholder}
-                    className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 min-h-[150px] resize-none"
+                    className="w-full p-3 sm:p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 min-h-[100px] sm:min-h-[150px] resize-none text-base"
                   />
                 ) : currentQuestion?.type === 'height' ? (
-                  <div className="space-y-4">
-                    <div className="flex space-x-4">
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
                       <div className="flex-1">
                         <input
                           type="number"
@@ -213,18 +213,18 @@ export default function QuestionnairePage() {
                             const unit = answers[currentQuestion?.id]?.split(' ')[1] || 'ft';
                             handleAnswer(`${e.target.value} ${unit}`);
                           }}
-                          placeholder="Enter height"
-                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                          placeholder="Height"
+                          className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-base"
                         />
                       </div>
-                      <div className="flex rounded-xl border-2 border-gray-200 overflow-hidden">
+                      <div className="flex rounded-xl border-2 border-gray-200 overflow-hidden w-24">
                         <button
                           type="button"
                           onClick={() => {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} ft`);
                           }}
-                          className={`px-4 py-4 text-sm font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 sm:px-4 sm:py-4 text-xs sm:text-sm font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').endsWith('ft')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
@@ -238,7 +238,7 @@ export default function QuestionnairePage() {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} cm`);
                           }}
-                          className={`px-4 py-4 text-sm font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 sm:px-4 sm:py-4 text-xs sm:text-sm font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').endsWith('cm')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
@@ -250,8 +250,8 @@ export default function QuestionnairePage() {
                     </div>
                   </div>
                 ) : currentQuestion?.type === 'weight' ? (
-                  <div className="space-y-4">
-                    <div className="flex space-x-4">
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
                       <div className="flex-1">
                         <input
                           type="number"
@@ -259,19 +259,19 @@ export default function QuestionnairePage() {
                           onChange={(e) => {
                             handleAnswer(`${e.target.value} kg`);
                           }}
-                          placeholder="Enter weight"
-                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                          placeholder="Weight"
+                          className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-base"
                         />
                       </div>
-                      <div className="flex items-center justify-center px-4 bg-gray-100 rounded-xl border-2 border-gray-200">
-                        <span className="text-gray-700 font-medium">kg</span>
+                      <div className="flex items-center justify-center px-4 bg-gray-100 rounded-xl border-2 border-gray-200 w-20">
+                        <span className="text-gray-700 font-medium text-sm">kg</span>
                       </div>
                     </div>
                   </div>
                 ) : currentQuestion?.type === 'duration' ? (
-                  <div className="space-y-4">
-                    <div className="flex space-x-4">
-                      <div className="flex-1">
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <div className="w-20">
                         <input
                           type="number"
                           value={answers[currentQuestion?.id]?.split(' ')[0] || ''}
@@ -279,24 +279,24 @@ export default function QuestionnairePage() {
                             const unit = answers[currentQuestion?.id]?.split(' ')[1] || 'days';
                             handleAnswer(`${e.target.value} ${unit}`);
                           }}
-                          placeholder="Enter duration"
-                          className="w-full p-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-lg"
+                          placeholder=""
+                          className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-0 transition-all duration-200 text-base"
                         />
                       </div>
-                      <div className="flex rounded-xl border-2 border-gray-200 overflow-hidden">
+                      <div className="flex-1 flex gap-0.5 rounded-xl border-2 border-gray-200 overflow-hidden">
                         <button
                           type="button"
                           onClick={() => {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} days`);
                           }}
-                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 text-xs font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').includes('days')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          Days
+                          D
                         </button>
                         <button
                           type="button"
@@ -304,13 +304,13 @@ export default function QuestionnairePage() {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} weeks`);
                           }}
-                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 text-xs font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').includes('weeks')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          Weeks
+                          W
                         </button>
                         <button
                           type="button"
@@ -318,13 +318,13 @@ export default function QuestionnairePage() {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} months`);
                           }}
-                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 text-xs font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').includes('months')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          Months
+                          M
                         </button>
                         <button
                           type="button"
@@ -332,13 +332,13 @@ export default function QuestionnairePage() {
                             const value = answers[currentQuestion?.id]?.split(' ')[0] || '';
                             handleAnswer(`${value} years`);
                           }}
-                          className={`px-3 py-4 text-xs font-medium transition-all duration-200 ${
+                          className={`flex-1 px-2 py-3 text-xs font-medium transition-all duration-200 ${
                             (answers[currentQuestion?.id] || '').includes('years')
                               ? 'bg-primary text-white'
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          Years
+                          Y
                         </button>
                       </div>
                     </div>
@@ -360,21 +360,23 @@ export default function QuestionnairePage() {
               </div>
 
               {/* Navigation */}
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <Button
                   variant="outline"
                   onClick={handleBack}
                   disabled={currentStep === 0}
+                  className="px-3 py-2 text-sm"
                 >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  <ArrowLeft className="w-3 h-3 mr-1" />
                   Back
                 </Button>
                 <Button
                   onClick={handleNext}
                   disabled={!answers[currentQuestion?.id]}
+                  className="px-4 py-2 text-sm"
                 >
                   {currentStep === questions.length - 1 ? 'Review' : 'Next'}
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-3 h-3 ml-1" />
                 </Button>
               </div>
             </motion.div>
@@ -424,14 +426,15 @@ export default function QuestionnairePage() {
                 </div>
               </div>
 
-              <div className="flex justify-between">
-                <Button variant="outline" onClick={handleBack}>
-                  <ArrowLeft className="w-4 h-4 mr-2" />
+              <div className="flex justify-between gap-2">
+                <Button variant="outline" onClick={handleBack} className="px-3 py-2 text-sm">
+                  <ArrowLeft className="w-3 h-3 mr-1" />
                   Back
                 </Button>
-                <Button onClick={handleSubmit} isLoading={loading}>
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Continue to Payment
+                <Button onClick={handleSubmit} isLoading={loading} className="px-4 py-2 text-sm">
+                  <MessageCircle className="w-3 h-3 mr-1" />
+                  <span className="hidden sm:inline">Continue to Payment</span>
+                  <span className="sm:hidden">Continue</span>
                 </Button>
               </div>
             </motion.div>
