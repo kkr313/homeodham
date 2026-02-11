@@ -61,6 +61,22 @@ const questions = [
   }
 ];
 
+// Helper function to format duration with proper singular/plural
+const formatDuration = (value: string) => {
+  if (!value) return '';
+  const parts = value.split(' ');
+  if (parts.length < 2) return value;
+  
+  const num = parseInt(parts[0], 10);
+  const unit = parts[1].toLowerCase();
+  
+  // Handle plural forms
+  if (num === 1) {
+    return value.replace(/\d+\s+\w+/, `${num} ${unit.slice(0, -1)}`);
+  }
+  return value;
+};
+
 export default function QuestionnairePage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
@@ -296,7 +312,7 @@ export default function QuestionnairePage() {
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          D
+                          Day
                         </button>
                         <button
                           type="button"
@@ -310,7 +326,7 @@ export default function QuestionnairePage() {
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          W
+                          Week
                         </button>
                         <button
                           type="button"
@@ -324,7 +340,7 @@ export default function QuestionnairePage() {
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          M
+                          Month
                         </button>
                         <button
                           type="button"
@@ -338,7 +354,7 @@ export default function QuestionnairePage() {
                               : 'bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          Y
+                          Year
                         </button>
                       </div>
                     </div>
@@ -407,7 +423,9 @@ export default function QuestionnairePage() {
                   {questions.map((q) => (
                     <div key={q.id} className="border-b border-gray-100 pb-4">
                       <p className="text-sm text-gray-500 mb-1">{q.question}</p>
-                      <p className="text-gray-800 font-medium">{answers[q.id] || 'Not answered'}</p>
+                      <p className="text-gray-800 font-medium">
+                        {q.type === 'duration' ? formatDuration(answers[q.id] || '') : (answers[q.id] || 'Not answered')}
+                      </p>
                     </div>
                   ))}
                 </div>
