@@ -288,7 +288,7 @@ Thank you!`;
           {/* QR Code - Centered */}
           <div className="p-6 flex flex-col items-center">
             {/* QR Code */}
-            <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-4 text-center mb-6 w-full max-w-xs mx-auto">
+            <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-2 pt-0 text-center mb-6 w-full max-w-xs mx-auto">
               <img 
                 src="/img/qr-Image.png" 
                 alt="Payment QR Code" 
